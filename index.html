@@ -4,46 +4,1172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generator Modul Ajar Pro - SMP/MTs</title>
-    <!-- ... Bagian head tetap seperti file asli ... -->
-</head>
-<body>
-    <!-- ... Bagian body dari file index.html asli tetap di sini ... -->
-    <script>
-        // === Semua script asli index.html tetap di sini ===
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PDF & Download Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-        // Tambahan script untuk proteksi download
-        function checkDownloadAccess(fileType) {
-            const granted = localStorage.getItem('downloadAccessGranted') === 'true';
-            if (granted) {
-                if (fileType === 'word') {
-                    downloadAsDocx(getFormData());
-                } else if (fileType === 'pdf') {
-                    downloadAsPdf();
-                }
-            } else {
-                window.location.href = `security.html?target=${fileType}`;
-            }
+    <style>
+        /* === ROOT VARIABLES === */
+        :root {
+            --bg-main: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --color-primary: #005f73; /* Biru Laut Dalam */
+            --color-secondary: #0a9396; /* Biru Kehijauan */
+            --color-accent: #e9d8a6; /* Emas Pucat */
+            --color-success: #2a9d8f;
+            --color-danger: #e76f51;
+            --border-color: #dee2e6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const startDownload = params.get('startDownload');
-            if (startDownload === 'word') {
-                downloadAsDocx(getFormData());
-            } else if (startDownload === 'pdf') {
-                downloadAsPdf();
+        /* === GENERAL STYLES === */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        /* === HEADER === */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0.5rem auto 0;
+        }
+
+        /* === CARD & FORM STYLES === */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .label-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input[type="text"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 95, 115, 0.2);
+        }
+        select:disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .helper-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        
+        /* === BUTTONS === */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+            width: 100%;
+            font-size: 1.1rem;
+            padding: 1rem;
+        }
+        .btn-primary:hover {
+            background-color: #004c5a;
+        }
+        .btn-primary:disabled {
+            background-color: #a9b3b7;
+            cursor: wait;
+        }
+        .button-group-secondary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .btn-support {
+            background-color: var(--color-success);
+            color: white;
+        }
+        .btn-load-session {
+            background-color: #f8f9fa;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-regenerate, .btn-gemini {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            background-color: #e9ecef;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            margin-left: 0.5rem;
+        }
+        .btn-gemini {
+            background-color: #e6e8fa;
+            color: #434487;
+            border-color: #c3c7f7;
+        }
+        .btn-regenerate:hover, .btn-gemini:hover {
+            background-color: #ced4da;
+        }
+        .btn-regenerate:disabled, .btn-gemini:disabled {
+            cursor: wait;
+            background-color: #f8f9fa;
+        }
+        .btn-download {
+            background-color: var(--color-success);
+            color: white;
+            width: 100%;
+        }
+
+        /* === SPINNER / LOADER === */
+        .spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid currentColor;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .main-loader {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .main-loader .spinner {
+            width: 3rem;
+            height: 3rem;
+            border-width: 4px;
+            margin: 0 auto 1rem;
+            color: var(--color-primary);
+        }
+        .section-loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            min-height: 100px;
+        }
+
+        /* === OUTPUT / PREVIEW SECTION === */
+        #output-container {
+            margin-top: 2rem;
+        }
+        .preview-card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .preview-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+        }
+        .preview-header h2 {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+        .preview-section h3 {
+            font-size: 1.25rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--color-secondary);
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .preview-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+        .preview-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .preview-section th, .preview-section td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .preview-section th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .preview-section ul {
+            padding-left: 1.5rem;
+        }
+        .pengesahan-table {
+            width: 100%;
+            border: none !important;
+            margin-top: 4rem;
+            text-align: center;
+        }
+        .pengesahan-table td {
+            border: none !important;
+            width: 50%;
+            vertical-align: top;
+            padding: 0 1rem;
+        }
+
+        /* === DOWNLOAD SECTION === */
+        .download-section {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* === MODAL STYLES === */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal h3 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .modal-content {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            text-align: left;
+        }
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        .modal-footer-center {
+            justify-content: center;
+        }
+
+        /* === FOOTER STYLES === */
+        .site-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .site-footer p {
+            margin-bottom: 1rem;
+        }
+        .social-icons a {
+            color: var(--text-secondary);
+            margin: 0 0.75rem;
+            display: inline-block;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .social-icons a:hover {
+            color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+        .social-icons svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .card, .preview-card {
+                padding: 1.5rem;
             }
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Generator Modul Ajar Pro</h1>
+        <p>Asisten AI andalan para guru hebat. Sulap RPP jadi seru dalam hitungan menit!</p>
+    </header>
+
+    <div id="form-card" class="card">
+        <!-- Step 1: Tingkat Kedalaman Konten -->
+        <div class="form-group">
+            <label for="tingkat_kedalaman">Level Keseriusan Modul</label>
+            <select id="tingkat_kedalaman">
+                <option value="ringkas">Ringkas & Cepat (Draf Awal)</option>
+                <option value="detail" selected>Detail & Mendalam (Siap Pakai)</option>
+            </select>
+            <p class="helper-text">Pilih 'Detail' kalau lagi semangat & butuh yang super lengkap! 🔥</p>
+        </div>
+        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+        <!-- Step 2: Informasi Dasar -->
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="penyusun">Karya Cipta dari?</label>
+                <input type="text" id="penyusun" placeholder="Tulis nama kerenmu di sini">
+            </div>
+            <div class="form-group">
+                <label for="instansi">Markas Mengajarnya di?</label>
+                <input type="text" id="instansi" placeholder="Nama sekolah/madrasah tercinta">
+            </div>
+            <div class="form-group">
+                <label for="lokasi">Domisili Kece-nya di Mana?</label>
+                <input type="text" id="lokasi" placeholder="cth: Ponorogo">
+            </div>
+        </div>
+        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+        
+        <!-- Step 3: Parameter Modul -->
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="tahun">Tahun Pelajaran</label>
+                <select id="tahun">
+                    <option>2024/2025</option>
+                    <option>2025/2026</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="semester">Semester</label>
+                <select id="semester">
+                    <option value="Ganjil">I (Ganjil)</option>
+                    <option value="Genap">II (Genap)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="jenis_sekolah">Jenis Sekolah</label>
+                <select id="jenis_sekolah">
+                    <option value="">-- Pilih --</option>
+                    <option value="SMP">SMP</option>
+                    <option value="MTs">MTs</option>
+                </select>
+            </div>
+        </div>
+        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+        <!-- Step 4: Konten Pembelajaran -->
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="kelas">Kelas</label>
+                <select id="kelas" disabled>
+                    <option>Pilih jenis sekolah dulu</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="mapel">Mata Pelajaran</label>
+                <select id="mapel" disabled>
+                    <option>Pilih kelas dulu</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="label-group">
+                    <label for="materi">Materi Pokok</label>
+                    <div id="materi-loading" class="loading-indicator">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+                <select id="materi" disabled>
+                    <option>Pilih mapel dulu</option>
+                </select>
+            </div>
+        </div>
+        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+        <!-- Step 5: Pendekatan & Model -->
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="pendekatan">Pendekatan Pembelajaran</label>
+                <select id="pendekatan">
+                    <option value="Pembelajaran Berdiferensiasi">Pembelajaran Berdiferensiasi</option>
+                    <option value="Teaching at the Right Level (TaRL)">Teaching at the Right Level (TaRL)</option>
+                    <option value="Culturally Responsive Teaching">Culturally Responsive Teaching</option>
+                    <option value="Pembelajaran Berbasis Kompetensi">Pembelajaran Berbasis Kompetensi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="model">Model Pembelajaran</label>
+                <select id="model">
+                    <option value="Project-Based Learning (PjBL)">Project-Based Learning (PjBL)</option>
+                    <option value="Problem-Based Learning (PBL)">Problem-Based Learning (PBL)</option>
+                    <option value="Inquiry Learning">Inquiry Learning</option>
+                    <option value="Discovery Learning">Discovery Learning</option>
+                    <option value="Contextual Teaching and Learning (CTL)">Contextual Teaching and Learning (CTL)</option>
+                </select>
+            </div>
+        </div>
+        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+        <!-- Step 6: Detail Opsional -->
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="cp">Capaian Pembelajaran (Boleh dikosongin kok!)</label>
+                <textarea id="cp" rows="3" placeholder="Kalau kosong, nanti AI bisikin yang pas 😉"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="tp">Tujuan Pembelajaran (Yang ini juga santai aja)</label>
+                <textarea id="tp" rows="3" placeholder="Biar AI yang cariin kata-kata saktinya"></textarea>
+            </div>
+        </div>
+        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+        <!-- Step 7: Tombol Aksi -->
+        <button id="generateBtn" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+            Sulap Jadi Modul Ajar!
+        </button>
+        <div class="button-group-secondary">
+            <button id="loadSessionBtn" type="button" class="btn btn-load-session">🔄 Muat Sesi Terakhir</button>
+            <a href="https://wa.me/6285159599193" target="_blank" class="btn btn-support">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="currentColor"><path d="M19.2,4.8C17.1,2.7,14.5,1.6,11.8,1.6C6.2,1.6,1.6,6.2,1.6,11.8c0,1.8,0.5,3.6,1.4,5.2L1.5,22.5l5.5-1.4 c1.6,0.8,3.3,1.3,5,1.3h0c5.6,0,10.2-4.6,10.2-10.2C22.2,9.1,21.3,6.9,19.2,4.8z M11.8,20.8h0c-1.6,0-3.2-0.4-4.6-1.2l-0.3-0.2 l-3.4,0.9l0.9-3.4l-0.2-0.3c-0.9-1.4-1.3-3-1.3-4.8c0-4.8,3.9-8.7,8.7-8.7c2.3,0,4.5,0.9,6.2,2.6c1.7,1.7,2.6,3.9,2.6,6.2 C20.5,16.9,16.6,20.8,11.8,20.8z M16.3,14.6c-0.2-0.1-1.3-0.6-1.5-0.7c-0.2-0.1-0.3-0.1-0.5,0.1c-0.1,0.2-0.6,0.7-0.7,0.8 c-0.1,0.1-0.2,0.2-0.4,0.1c-0.2-0.1-0.8-0.3-1.6-1c-0.6-0.5-1-1.2-1.2-1.4c-0.1-0.2,0-0.3,0.1-0.4c0.1-0.1,0.2-0.3,0.3-0.4 c0.1-0.1,0.1-0.2,0.2-0.3c0.1-0.1,0-0.2,0-0.3C10.6,10,10,8.7,9.8,8.2C9.6,7.7,9.4,7.8,9.2,7.8c-0.1,0-0.3,0-0.5,0 C8.6,7.8,8.3,7.9,8.1,8.2c-0.2,0.3-0.8,0.8-0.8,2c0,1.2,0.8,2.3,0.9,2.4c0.1,0.2,1.6,2.5,4,3.5c0.6,0.2,1,0.4,1.4,0.5 c0.6,0.2,1.1,0.1,1.5-0.1c0.5-0.3,1.3-1.1,1.5-1.3c0.2-0.2,0.2-0.4,0.1-0.5C16.8,14.8,16.5,14.7,16.3,14.6z"></path></svg>
+                Dukung & Beri Masukan
+            </a>
+        </div>
+    </div>
+
+    <div id="output-container">
+        <!-- Hasil Generasi AI akan muncul di sini -->
+    </div>
+
+    <!-- Gemini Modal -->
+    <div id="gemini-modal-overlay" class="modal-overlay">
+        <div class="modal">
+            <h3 id="gemini-modal-title"></h3>
+            <div id="gemini-modal-content" class="modal-content"></div>
+            <div class="modal-footer">
+                <button id="gemini-modal-close" class="btn btn-load-session">Nggak Dulu Deh</button>
+                <button id="gemini-modal-apply" class="btn btn-primary" style="background-color: var(--color-success);">Suka! Pakai yang Ini</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Alert Modal -->
+    <div id="alert-modal-overlay" class="modal-overlay">
+        <div class="modal">
+            <h3 id="alert-modal-title"></h3>
+            <p id="alert-modal-message" class="modal-content" style="text-align: center;"></p>
+            <div class="modal-footer modal-footer-center">
+                <button id="alert-modal-close" class="btn btn-primary">Siap, laksanakan!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <p>&copy; lumintu99.id Dibuat dengan ❤️ dan AI untuk para Pendidik Hebat.</p>
+    <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61578708068973" title="Facebook" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+        <a href="https://www.youtube.com/channel/UC6ew6_lT9TFkbI9NJL0XxTA" title="YouTube" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33A29 29 0 0 0 22.54 6.42z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+        <a href="https://www.tiktok.com/@lumintu.ai" title="TikTok" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.05-4.84-.95-6.43-2.8-1.59-1.87-2.16-4.56-1.52-6.81.64-2.25 2.4-4.1 4.43-5.1.02-.01.01-.02.02-.02.28-.13.56-.25.85-.37.04-1.5.02-3.01.01-4.51.01-.02.01-.04.02-.06.01-2.2.02-4.41.01-6.61z"></path></svg></a>
+    </div>
+</footer>
+
+<script type="module">
+    // === GLOBAL STATE FOR GEMINI MODAL ===
+    let activeGeminiTarget = null;
+    let loadingQuotes = [
+        "Sabar ya... AI lagi minum kopi sambil meracik keajaiban.",
+        "Sedang mengumpulkan ide-ide cemerlang dari seluruh alam semesta...",
+        "Tenang, servernya lagi nggak ngambek kok. Cuma butuh mikir bentar.",
+        "Proses kreatif sedang berlangsung! Jangan diganggu, nanti idenya buyar.",
+        "Psstt... AI lagi konsultasi sama para ahli kurikulum."
+    ];
+
+    // === ELEMENT REFERENCES ===
+    const elements = {
+        tingkatKedalaman: document.getElementById('tingkat_kedalaman'),
+        penyusun: document.getElementById('penyusun'),
+        instansi: document.getElementById('instansi'),
+        lokasi: document.getElementById('lokasi'),
+        tahun: document.getElementById('tahun'),
+        semester: document.getElementById('semester'),
+        jenisSekolah: document.getElementById('jenis_sekolah'),
+        kelas: document.getElementById('kelas'),
+        mapel: document.getElementById('mapel'),
+        materi: document.getElementById('materi'),
+        pendekatan: document.getElementById('pendekatan'),
+        model: document.getElementById('model'),
+        cp: document.getElementById('cp'),
+        tp: document.getElementById('tp'),
+        generateBtn: document.getElementById('generateBtn'),
+        loadSessionBtn: document.getElementById('loadSessionBtn'),
+        outputContainer: document.getElementById('output-container'),
+        materiLoading: document.getElementById('materi-loading'),
+        geminiModalOverlay: document.getElementById('gemini-modal-overlay'),
+        geminiModalTitle: document.getElementById('gemini-modal-title'),
+        geminiModalContent: document.getElementById('gemini-modal-content'),
+        geminiModalClose: document.getElementById('gemini-modal-close'),
+        geminiModalApply: document.getElementById('gemini-modal-apply'),
+        alertModalOverlay: document.getElementById('alert-modal-overlay'),
+        alertModalTitle: document.getElementById('alert-modal-title'),
+        alertModalMessage: document.getElementById('alert-modal-message'),
+        alertModalClose: document.getElementById('alert-modal-close'),
+    };
+
+    // === DATA MATA PELAJARAN ===
+    const subjectData = {
+        smp: ["Pendidikan Pancasila", "Bahasa Indonesia", "Matematika", "Ilmu Pengetahuan Alam (IPA)", "Ilmu Pengetahuan Sosial (IPS)", "Bahasa Inggris", "Pendidikan Agama Islam", "Seni Budaya", "PJOK", "Informatika"],
+        mts: ["Al-Qur'an Hadis", "Akidah Akhlak", "Fikih", "Sejarah Kebudayaan Islam (SKI)", "Bahasa Arab"]
+    };
+
+    // === EVENT LISTENERS ===
+    elements.jenisSekolah.addEventListener('change', handleJenisSekolahChange);
+    elements.kelas.addEventListener('change', handleKelasChange);
+    elements.mapel.addEventListener('change', handleMapelChange);
+    elements.generateBtn.addEventListener('click', handleGenerate);
+    elements.loadSessionBtn.addEventListener('click', loadLastSession);
+    
+    // Modal Listeners
+    elements.geminiModalClose.addEventListener('click', hideGeminiModal);
+    elements.geminiModalApply.addEventListener('click', applyGeminiSuggestion);
+    elements.geminiModalOverlay.addEventListener('click', (e) => {
+        if (e.target === elements.geminiModalOverlay) hideGeminiModal();
+    });
+    elements.alertModalClose.addEventListener('click', hideAlertModal);
+    elements.alertModalOverlay.addEventListener('click', (e) => {
+        if (e.target === elements.alertModalOverlay) hideAlertModal();
+    });
+
+    // === HANDLER FUNCTIONS ===
+    function handleJenisSekolahChange() {
+        const selectedJenis = elements.jenisSekolah.value;
+        resetDropdown(elements.mapel, 'Pilih kelas dulu');
+        resetDropdown(elements.materi, 'Pilih mapel dulu');
+
+        if (selectedJenis) {
+            enableDropdown(elements.kelas, '-- Pilih Kelas --', [
+                { value: 'VII', text: 'Kelas VII' },
+                { value: 'VIII', text: 'Kelas VIII' },
+                { value: 'IX', text: 'Kelas IX' }
+            ]);
+        } else {
+            resetDropdown(elements.kelas, 'Pilih jenis sekolah dulu');
+        }
+    }
+
+    function handleKelasChange() {
+        const jenis = elements.jenisSekolah.value;
+        const kelas = elements.kelas.value;
+        resetDropdown(elements.materi, 'Pilih mapel dulu');
+
+        if (jenis && kelas) {
+            let mapelOptions = [...subjectData.smp];
+            if (jenis === 'MTs') {
+                mapelOptions = [...mapelOptions, ...subjectData.mts];
+            }
+            enableDropdown(elements.mapel, '-- Pilih Mata Pelajaran --', mapelOptions.sort().map(m => ({ value: m, text: m })));
+        } else {
+            resetDropdown(elements.mapel, 'Pilih kelas dulu');
+        }
+    }
+
+    async function handleMapelChange() {
+        const kelas = elements.kelas.value;
+        const mapel = elements.mapel.value;
+
+        if (kelas && mapel) {
+            setLoading(true);
+            resetDropdown(elements.materi, 'AI sedang mencari materi...');
+            
+            const prompt = `Buat daftar 10 materi pokok untuk mata pelajaran "${mapel}" kelas ${kelas} tingkat SMP/MTs sesuai Kurikulum Merdeka. Jawab HANYA dalam format JSON array berisi string. Contoh: ["Teks Prosedur", "Sistem Pencernaan"]`;
+            
+            try {
+                const responseText = await fetchAiData(prompt);
+                if (!responseText) throw new Error("Respons AI kosong.");
+
+                // Robust JSON parsing
+                const startIndex = responseText.indexOf('[');
+                const endIndex = responseText.lastIndexOf(']');
+                if (startIndex === -1 || endIndex === -1) {
+                    throw new Error("Respons AI tidak mengandung format JSON array yang valid.");
+                }
+                
+                const jsonString = responseText.substring(startIndex, endIndex + 1);
+                const materiList = JSON.parse(jsonString);
+                
+                enableDropdown(elements.materi, '-- Pilih Materi Pokok --', materiList.map(m => ({ value: m, text: m })));
+            } catch (error) {
+                console.error("Gagal memuat materi:", error);
+                if (error.message.includes("overloaded")) {
+                    showAlertModal("Waduh, AI Lagi Sibuk Banget!", "Asisten AI-nya sedang banyak kerjaan nih. Coba istirahat sejenak lalu pilih lagi ya!");
+                } else {
+                    showAlertModal("Oops, Ada Gangguan!", "Sepertinya ada sedikit masalah teknis saat memuat materi. Coba ulangi lagi ya.");
+                }
+                resetDropdown(elements.materi, 'Gagal memuat materi');
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            resetDropdown(elements.materi, 'Pilih mapel dulu');
+        }
+    }
+
+    async function handleGenerate() {
+        if (!validateInputs()) return;
+
+        setGenerateButtonState(true, 'AI sedang bekerja...');
+        const randomQuote = loadingQuotes[Math.floor(Math.random() * loadingQuotes.length)];
+        elements.outputContainer.innerHTML = `
+            <div class="main-loader">
+                <div class="spinner"></div>
+                <p>${randomQuote}</p>
+            </div>`;
+
+        const formData = getFormData();
+        saveSession(formData);
+        
+        try {
+            // Sequential Generation
+            const infoUmumPrompt = createPartialPrompt('info_umum', formData);
+            const infoUmumHtml = await fetchAiData(infoUmumPrompt);
+            
+            const komponenIntiPrompt = createPartialPrompt('komponen_inti', formData);
+            const komponenIntiHtml = await fetchAiData(komponenIntiPrompt);
+
+            const lampiranPrompt = createPartialPrompt('lampiran', formData);
+            const lampiranHtml = await fetchAiData(lampiranPrompt);
+
+            const finalHtml = constructFinalHtml(formData, { infoUmumHtml, komponenIntiHtml, lampiranHtml });
+            renderOutput(finalHtml, formData);
+
+        } catch (error) {
+            console.error("Gagal membuat modul ajar:", error);
+            if (error.message.includes("overloaded")) {
+                showAlertModal("Waduh, AI Lagi Sibuk Banget!", "Asisten AI-nya sedang banyak kerjaan nih. Coba istirahat sejenak lalu klik lagi ya!");
+            } else {
+                showAlertModal("Oops, Ada Gangguan!", "Sepertinya ada sedikit masalah teknis. Coba ulangi lagi ya.");
+            }
+            elements.outputContainer.innerHTML = ''; // Clear the loader
+        } finally {
+            setGenerateButtonState(false, 'Sulap Jadi Modul Ajar!');
+        }
+    }
+    
+    // Attach regenerate function to window to be accessible from dynamically created HTML
+    window.handleRegenerate = async function(sectionKey) {
+        const targetDiv = document.getElementById(`content-${sectionKey}`);
+        const regenButton = document.querySelector(`button[onclick="window.handleRegenerate('${sectionKey}')"]`);
+        
+        if (!targetDiv || !regenButton) return;
+
+        const originalContent = targetDiv.innerHTML;
+        targetDiv.innerHTML = `<div class="section-loader"><div class="spinner"></div></div>`;
+        regenButton.disabled = true;
+
+        const formData = getFormData();
+        const prompt = createPartialPrompt(sectionKey, formData);
+
+        try {
+            const newHtml = await fetchAiData(prompt);
+            targetDiv.innerHTML = newHtml;
+        } catch (error) {
+            console.error(`Gagal membuat ulang bagian ${sectionKey}:`, error);
+            if (error.message.includes("overloaded")) {
+                showAlertModal("Waduh, AI Lagi Sibuk Banget!", "Asisten AI-nya sedang banyak kerjaan nih. Coba istirahat sejenak lalu klik lagi ya!");
+            } else {
+                showAlertModal("Oops, Ada Gangguan!", "Sepertinya ada sedikit masalah teknis. Coba ulangi lagi ya.");
+            }
+            targetDiv.innerHTML = originalContent;
+        } finally {
+            regenButton.disabled = false;
+        }
+    }
+    
+    // === NEW GEMINI FEATURES ===
+    window.handleExpandQuestions = async function() {
+        const pemantikList = document.getElementById('pertanyaan-pemantik-list');
+        if (!pemantikList) return;
+
+        activeGeminiTarget = pemantikList; // Set target for replacement
+        const originalQuestions = pemantikList.innerHTML;
+        showGeminiModal('✨ Kembangkan Pertanyaan Pemantik...', '<div class="section-loader"><div class="spinner"></div></div>');
+
+        const formData = getFormData();
+        const prompt = `Anda adalah seorang ahli pedagogi. Berdasarkan daftar pertanyaan pemantik berikut: ${originalQuestions}, buatkan daftar pertanyaan turunan yang lebih mendalam untuk memfasilitasi diskusi kelas yang kritis (HOTS). Sertakan juga beberapa petunjuk untuk guru dalam memandu diskusi tersebut. Format jawaban dalam bentuk poin-poin HTML yang rapi.`;
+
+        try {
+            const newContent = await fetchAiData(prompt);
+            showGeminiModal('✨ Ide Pertanyaan Lanjutan', newContent);
+        } catch (e) {
+            showGeminiModal('Error', '<p>Gagal mendapatkan ide. Silakan coba lagi.</p>');
+        }
+    }
+
+    window.handleNewIcebreaker = async function() {
+        const icebreakerDiv = document.getElementById('kegiatan-pembelajaran-content');
+        if (!icebreakerDiv) return;
+        
+        activeGeminiTarget = icebreakerDiv; // Set target for replacement
+        showGeminiModal('✨ Mencari Ide Ice Breaking Baru...', '<div class="section-loader"><div class="spinner"></div></div>');
+        const formData = getFormData();
+        const prompt = `Anda adalah seorang guru yang kreatif. Sarankan sebuah aktivitas ice breaking atau brainstorming (durasi 5-10 menit) yang relevan untuk materi '${formData.materi}' pada mata pelajaran '${formData.mapel}' untuk siswa kelas ${formData.kelas}. Berikan instruksi yang jelas untuk guru dalam format HTML yang rapi. Ganti HANYA bagian Pendahuluan dari Kegiatan Pembelajaran.`;
+        
+        try {
+            const newContent = await fetchAiData(prompt);
+            showGeminiModal('✨ Ide Ice Breaking Baru', newContent);
+        } catch (e) {
+            showGeminiModal('Error', '<p>Gagal mendapatkan ide. Silakan coba lagi.</p>');
+        }
+    }
+
+    function applyGeminiSuggestion() {
+        if (activeGeminiTarget) {
+            // Special handling for replacing only the introduction part of the learning activities
+            if (activeGeminiTarget.id === 'kegiatan-pembelajaran-content') {
+                const fullContent = activeGeminiTarget.innerHTML;
+                const closingTag = '<h4>Kegiatan Inti';
+                const closingIndex = fullContent.indexOf(closingTag);
+                
+                // This logic is a bit fragile. It's better to have separate divs for intro, main, and closing activities.
+                if (closingIndex !== -1) {
+                    const newIntro = elements.geminiModalContent.innerHTML;
+                    const restOfContent = fullContent.substring(closingIndex);
+                    activeGeminiTarget.innerHTML = `<h4>Pendahuluan</h4>${newIntro} <br>` + restOfContent;
+                } else {
+                    // Fallback if the structure isn't as expected
+                    activeGeminiTarget.innerHTML = elements.geminiModalContent.innerHTML;
+                }
+            } else {
+                 activeGeminiTarget.innerHTML = elements.geminiModalContent.innerHTML;
+            }
+            hideGeminiModal();
+        }
+    }
+
+    // === HELPER FUNCTIONS ===
+    function showGeminiModal(title, content) {
+        elements.geminiModalTitle.textContent = title;
+        elements.geminiModalContent.innerHTML = content;
+        elements.geminiModalOverlay.style.display = 'flex';
+    }
+
+    function hideGeminiModal() {
+        elements.geminiModalOverlay.style.display = 'none';
+        activeGeminiTarget = null; // Clear target on close
+    }
+
+    function showAlertModal(title, message) {
+        elements.alertModalTitle.textContent = title;
+        elements.alertModalMessage.textContent = message;
+        elements.alertModalOverlay.style.display = 'flex';
+    }
+
+    function hideAlertModal() {
+        elements.alertModalOverlay.style.display = 'none';
+    }
+
+    function resetDropdown(selectEl, defaultText) {
+        selectEl.disabled = true;
+        selectEl.innerHTML = `<option>${defaultText}</option>`;
+    }
+
+    function enableDropdown(selectEl, defaultText, options) {
+        selectEl.disabled = false;
+        selectEl.innerHTML = `<option value="">${defaultText}</option>`;
+        options.forEach(opt => {
+            const optionEl = document.createElement('option');
+            optionEl.value = opt.value;
+            optionEl.textContent = opt.text;
+            selectEl.appendChild(optionEl);
+        });
+    }
+
+    function setLoading(isLoading) {
+        elements.materiLoading.style.display = isLoading ? 'flex' : 'none';
+    }
+
+    function setGenerateButtonState(isGenerating, text) {
+        elements.generateBtn.disabled = isGenerating;
+        // The text content is inside the last child of the button
+        elements.generateBtn.lastChild.textContent = ` ${text}`;
+    }
+
+    function validateInputs() {
+        const requiredFields = [
+            { el: elements.penyusun, name: "Karya Cipta dari?" },
+            { el: elements.instansi, name: "Markas Mengajarnya di?" },
+            { el: elements.lokasi, name: "Domisili Kece-nya di Mana?" },
+            { el: elements.jenisSekolah, name: "Jenis Sekolah" },
+            { el: elements.kelas, name: "Kelas" },
+            { el: elements.mapel, name: "Mata Pelajaran" },
+            { el: elements.materi, name: "Materi Pokok" },
+        ];
+        for (const field of requiredFields) {
+            if (!field.el.value) {
+                showAlertModal("Eits, Ada yang Ketinggalan!", `Bagian "${field.name}" sepertinya masih kosong. Tolong diisi dulu ya, biar AI-nya nggak bingung! 😉`);
+                field.el.focus();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function getFormData() {
+        return {
+            tingkatKedalaman: elements.tingkatKedalaman.value,
+            penyusun: elements.penyusun.value,
+            instansi: elements.instansi.value,
+            lokasi: elements.lokasi.value,
+            tahun: elements.tahun.value,
+            semester: elements.semester.value,
+            kelas: elements.kelas.value,
+            mapel: elements.mapel.value,
+            materi: elements.materi.value,
+            pendekatan: elements.pendekatan.value,
+            model: elements.model.value,
+            cp: elements.cp.value,
+            tp: elements.tp.value,
+        };
+    }
+
+    function renderOutput(htmlContent, formData) {
+        elements.outputContainer.innerHTML = `
+                <div id="printable-content">
+                    ${htmlContent}
+                </div>
+                <div class="preview-card">
+                    <div class="download-section" style="border-top: none; padding-top: 0;">
+                        <button id="downloadWordBtn" class="btn btn-download">Download .docx</button>
+                        <button id="downloadPdfBtn" class="btn btn-download">Download .pdf</button>
+                    </div>
+                </div>`;
+        
+        document.getElementById('downloadWordBtn').addEventListener('click', () => downloadAsDocx(formData));
+        document.getElementById('downloadPdfBtn').addEventListener('click', () => downloadAsPdf(formData));
+    }
+
+    // === SESSION MANAGEMENT ===
+    function saveSession(data) {
+        try {
+            localStorage.setItem('lastSession', JSON.stringify(data));
+        } catch (e) {
+            console.error("Failed to save session:", e);
+        }
+    }
+
+    async function loadLastSession() {
+        const savedData = localStorage.getItem('lastSession');
+        if (savedData) {
+            try {
+                const data = JSON.parse(savedData);
+                
+                // Populate simple fields and selects
+                Object.keys(data).forEach(key => {
+                    if (elements[key] && data[key] !== undefined) {
+                        elements[key].value = data[key];
+                    }
+                });
+
+                // Sequentially trigger change handlers for dependent dropdowns
+                handleJenisSekolahChange();
+                handleKelasChange();
+                await handleMapelChange(); // This is async and needs to be awaited
+                
+                // Set the final dropdown value after options are populated
+                elements.materi.value = data.materi;
+
+            } catch (error) {
+                console.error("Failed to load last session:", error);
+                showAlertModal("Gagal Memuat Sesi", "Tidak dapat memuat data sesi terakhir. Data mungkin korup.");
+            }
+        } else {
+            showAlertModal("Info", "Tidak ada sesi terakhir yang tersimpan.");
+        }
+    }
+    
+    // === AI & PROMPT ENGINEERING ===
+    async function fetchAiData(prompt) {
+        // IMPORTANT: The API key is handled by the execution environment.
+        // Do not hardcode it here for security reasons.
+        const apiKey = ""; 
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+        
+        const payload = {
+            contents: [{ role: "user", parts: [{ text: prompt }] }],
+            generationConfig: {
+                temperature: 0.5,
+                topP: 0.95,
+                topK: 40,
+            }
+        };
+
+        let retries = 5;
+        let delay = 1500;
+
+        while (retries > 0) {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!text) {
+                        throw new Error("Respons AI tidak valid atau kosong.");
+                    }
+                    return text.replace(/```html|```/g, '').trim();
+                }
+
+                if (response.status === 429 || response.status === 503) {
+                    console.warn(`Model overloaded (status ${response.status}). Retrying in ${delay / 1000}s...`);
+                    // Exponential backoff
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                    retries--;
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(`API Error (${response.status}): ${errorData.error.message}`);
+                }
+
+            } catch (error) {
+                if (retries > 1) {
+                    console.warn(`Network or fetch error. Retrying in ${delay / 1000}s...`, error);
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                    retries--;
+                } else {
+                    // Re-throw the last error if all retries fail
+                    throw error;
+                }
+            }
+        }
+        
+        throw new Error("Model is currently overloaded. Please try again in a few moments.");
+    }
+
+    function constructFinalHtml(data, generatedParts) {
+        const formattedDate = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+        return `
+            <div class="preview-card">
+                <div class="preview-header">
+                    <h2>MODUL AJAR: ${data.mapel.toUpperCase()}</h2>
+                    <p>${data.materi}</p>
+                </div>
+                <div class="preview-section">
+                    <h3>1. INFORMASI UMUM <button class="btn btn-regenerate" onclick="window.handleRegenerate('info_umum')">Generate Ulang</button></h3>
+                    <div id="content-info_umum">${generatedParts.infoUmumHtml}</div>
+                </div>
+            </div>
+
+            <div class="preview-card">
+                <div class="preview-section">
+                    <h3>2. KOMPONEN INTI <button class="btn btn-regenerate" onclick="window.handleRegenerate('komponen_inti')">Generate Ulang</button></h3>
+                    <div id="content-komponen_inti">${generatedParts.komponenIntiHtml}</div>
+                </div>
+            </div>
+            
+            <div class="preview-card">
+                <div class="preview-section">
+                    <h3>3. LAMPIRAN <button class="btn btn-regenerate" onclick="window.handleRegenerate('lampiran')">Generate Ulang</button></h3>
+                    <div id="content-lampiran">${generatedParts.lampiranHtml}</div>
+                </div>
+            </div>
+
+            <div class="preview-card">
+                <div class="pengesahan-section">
+                     <table class="pengesahan-table"><tbody><tr>
+                         <td><p>Mengetahui,</p><p style="margin-bottom: 5rem;">Kepala Sekolah</p><p style="font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 2px;">...................................</p></td>
+                         <td><p>${data.lokasi}, ${formattedDate}</p><p style="margin-bottom: 5rem;">Guru Mata Pelajaran</p><p style="font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 2px;">${data.penyusun}</p></td>
+                    </tr></tbody></table>
+                </div>
+            </div>
+        `;
+    }
+
+    function createPartialPrompt(section, data) {
+        const detailLevelInstruction = data.tingkatKedalaman === 'detail' 
+            ? "Buat bagian ini se-detail mungkin. Untuk Kegiatan Pembelajaran, sertakan estimasi waktu dan instruksi guru. Untuk Asesmen, berikan contoh soal dan rubrik."
+            : "Buat bagian ini secara ringkas dan to-the-point.";
+
+        let instruction = "";
+        let context = `
+            DATA KONTEKS:
+            - Mata Pelajaran: ${data.mapel}
+            - Kelas: ${data.kelas}
+            - Materi Pokok: ${data.materi}
+            - Pendekatan: ${data.pendekatan}
+            - Model: ${data.model}
+        `;
+
+        switch(section) {
+            case 'info_umum':
+                instruction = `Buatkan HANYA konten untuk bagian INFORMASI UMUM. Ini mencakup: <h4>A. Identitas Modul</h4> (buat tabel berisi Penyusun: ${data.penyusun}, Satuan Pendidikan: ${data.instansi}, Tahun: ${data.tahun}, Kelas/Fase: ${data.kelas}/D, Mapel: ${data.mapel}, Alokasi Waktu: 2 JP (80 Menit)), <h4>B. Kompetensi Awal</h4>, <h4>C. Profil Pelajar Pancasila</h4>, <h4>D. Sarana dan Prasarana</h4>, <h4>E. Target Peserta Didik</h4>, dan <h4>F. Model Pembelajaran</h4>. ${detailLevelInstruction}`;
+                break;
+            case 'komponen_inti':
+                instruction = `Buatkan HANYA konten untuk bagian KOMPONEN INTI. Ini mencakup: <h4>A. Capaian Pembelajaran</h4> (berdasarkan CP: "${data.cp || 'Buatkan oleh AI'}"), <h4>B. Tujuan Pembelajaran</h4> (berdasarkan TP: "${data.tp || 'Buatkan oleh AI'}"), <h4>C. Pemahaman Bermakna</h4>, <h4>D. Pertanyaan Pemantik</h4> (beri ID 'pertanyaan-pemantik-list' pada tag <ul> dan tambahkan tombol <button class="btn btn-gemini" onclick="window.handleExpandQuestions()">✨ Kembangkan dengan AI</button> setelahnya), <h4>E. Kegiatan Pembelajaran</h4> (beri ID 'kegiatan-pembelajaran-content' pada div pembungkusnya, struktur 3 tahap: Pendahuluan dengan ice breaking dan tombol <button class="btn btn-gemini" onclick="window.handleNewIcebreaker()">Cari Ide Ice Breaking Lain</button>, Inti dengan tips diferensiasi, Penutup dengan total 80 menit dan rincian waktu per tahap), <h4>F. Asesmen</h4>, <h4>G. Pengayaan & Remedial</h4>, serta <h4>H. Refleksi Guru & Siswa</h4>. ${detailLevelInstruction}`;
+                break;
+            case 'lampiran':
+                instruction = `Buatkan HANYA konten untuk bagian LAMPIRAN. Ini mencakup: <h4>A. Lembar Kerja Peserta Didik (LKPD)</h4> (Selalu buat beberapa (2-3) alternatif LKPD yang berdiferensiasi, konkret, dan kreatif), <h4>B. Rubrik Penilaian</h4> (yang relevan dengan LKPD/Asesmen), <h4>C. Bahan Bacaan</h4>, <h4>D. Glosarium</h4>, dan <h4>E. Daftar Pustaka</h4>. ${detailLevelInstruction}`;
+                break;
+        }
+
+        return `
+            Anda adalah seorang desainer instruksional ahli. Berdasarkan data berikut, buatkan ulang HANYA satu bagian spesifik dari sebuah modul ajar.
+            ${context}
+            TUGAS: ${instruction}
+            FORMAT OUTPUT: Berikan jawaban HANYA dalam format HTML bersih untuk bagian yang diminta. JANGAN sertakan judul utama (<h3>) atau wrapper card.
+        `;
+    }
+
+    // === DOWNLOAD FUNCTIONS ===
+    function downloadAsDocx(formData) {
+        const content = document.getElementById('printable-content').cloneNode(true);
+        content.querySelectorAll('.btn-regenerate, .btn-gemini').forEach(btn => btn.remove());
+        
+        const header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Modul Ajar</title></head><body>`;
+        const footer = "</body></html>";
+        const sourceHTML = header + content.innerHTML + footer;
+        
+        const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+        const fileDownload = document.createElement("a");
+        document.body.appendChild(fileDownload);
+        fileDownload.href = source;
+        fileDownload.download = `ModulAjar_${formData.mapel.replace(/ /g, '_')}_${formData.materi.replace(/ /g, '_')}.doc`;
+        fileDownload.click();
+        document.body.removeChild(fileDownload);
+    }
+
+    function downloadAsPdf(formData) {
+        const { jsPDF } = window.jspdf;
+        const content = document.getElementById('printable-content').cloneNode(true);
+        // Remove buttons before printing to PDF
+        content.querySelectorAll('.btn-regenerate, .btn-gemini').forEach(btn => btn.remove());
+        
+        const doc = new jsPDF({
+            orientation: 'p',
+            unit: 'mm',
+            format: 'a4'
         });
 
-        document.addEventListener('click', function (e) {
-            if (e.target && e.target.id === 'downloadWordBtn') {
-                e.preventDefault();
-                checkDownloadAccess('word');
-            } else if (e.target && e.target.id === 'downloadPdfBtn') {
-                e.preventDefault();
-                checkDownloadAccess('pdf');
-            }
+        doc.html(content, {
+            callback: function(doc) {
+                doc.save(`ModulAjar_${formData.mapel.replace(/ /g, '_')}_${formData.materi.replace(/ /g, '_')}.pdf`);
+            },
+            x: 15,
+            y: 15,
+            width: 180,
+            windowWidth: 800
         });
-    </script>
+    }
+</script>
+
 </body>
 </html>
