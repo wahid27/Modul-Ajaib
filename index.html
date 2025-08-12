@@ -196,7 +196,7 @@
         .btn-download {
             background-color: var(--color-success);
             color: white;
-            width: 100%;
+            width: 100%; /* Tombol download kini full width */
         }
 
         /* === SPINNER / LOADER === */
@@ -207,9 +207,6 @@
             border-top-color: transparent;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
         .loading-indicator {
             display: none;
@@ -350,7 +347,7 @@
         .modal-content {
             margin-bottom: 1.5rem;
             flex-grow: 1;
-            text-align: left;
+            text-align: center;
         }
         .modal-footer {
             display: flex;
@@ -361,7 +358,7 @@
             justify-content: center;
         }
 
-        /* === FOOTER STYLES === */
+        /* === FOOTER STYLES (BARU) === */
         .site-footer {
             text-align: center;
             padding: 2rem 1rem;
@@ -387,6 +384,7 @@
             width: 24px;
             height: 24px;
         }
+
 
         /* === RESPONSIVE === */
         @media (max-width: 768px) {
@@ -552,7 +550,7 @@
             <h3 id="gemini-modal-title"></h3>
             <div id="gemini-modal-content" class="modal-content"></div>
             <div class="modal-footer">
-                <button id="gemini-modal-close" class="btn btn-load-session">Nggak Dulu Deh</button>
+                <button id="gemini-modal-close" class="btn btn-secondary">Nggak Dulu Deh</button>
                 <button id="gemini-modal-apply" class="btn btn-primary" style="background-color: var(--color-success);">Suka! Pakai yang Ini</button>
             </div>
         </div>
@@ -562,7 +560,7 @@
     <div id="alert-modal-overlay" class="modal-overlay">
         <div class="modal">
             <h3 id="alert-modal-title"></h3>
-            <p id="alert-modal-message" class="modal-content" style="text-align: center;"></p>
+            <p id="alert-modal-message" class="modal-content"></p>
             <div class="modal-footer modal-footer-center">
                 <button id="alert-modal-close" class="btn btn-primary">Siap, laksanakan!</button>
             </div>
@@ -573,9 +571,9 @@
 <footer class="site-footer">
     <p>&copy; lumintu99.id Dibuat dengan ❤️ dan AI untuk para Pendidik Hebat.</p>
     <div class="social-icons">
-        <a href="https://www.facebook.com/profile.php?id=61578708068973" title="Facebook" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-        <a href="https://www.youtube.com/channel/UC6ew6_lT9TFkbI9NJL0XxTA" title="YouTube" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33A29 29 0 0 0 22.54 6.42z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-        <a href="https://www.tiktok.com/@lumintu.ai" title="TikTok" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.05-4.84-.95-6.43-2.8-1.59-1.87-2.16-4.56-1.52-6.81.64-2.25 2.4-4.1 4.43-5.1.02-.01.01-.02.02-.02.28-.13.56-.25.85-.37.04-1.5.02-3.01.01-4.51.01-.02.01-.04.02-.06.01-2.2.02-4.41.01-6.61z"></path></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61578708068973" title="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+        <a href="https://www.youtube.com/channel/UC6ew6_lT9TFkbI9NJL0XxTA" title="YouTube"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33A29 29 0 0 0 22.54 6.42z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+        <a href="" title="TikTok"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.05-4.84-.95-6.43-2.8-1.59-1.87-2.16-4.56-1.52-6.81.64-2.25 2.4-4.1 4.43-5.1.02-.01.01-.02.02-.02.28-.13.56-.25.85-.37.04-1.5.02-3.01.01-4.51.01-.02.01-.04.02-.06.01-2.2.02-4.41.01-6.61z"></path></svg></a>
     </div>
 </footer>
 
@@ -633,16 +631,18 @@
     elements.mapel.addEventListener('change', handleMapelChange);
     elements.generateBtn.addEventListener('click', handleGenerate);
     elements.loadSessionBtn.addEventListener('click', loadLastSession);
-    
-    // Modal Listeners
     elements.geminiModalClose.addEventListener('click', hideGeminiModal);
     elements.geminiModalApply.addEventListener('click', applyGeminiSuggestion);
     elements.geminiModalOverlay.addEventListener('click', (e) => {
-        if (e.target === elements.geminiModalOverlay) hideGeminiModal();
+        if (e.target === elements.geminiModalOverlay) {
+            hideGeminiModal();
+        }
     });
     elements.alertModalClose.addEventListener('click', hideAlertModal);
     elements.alertModalOverlay.addEventListener('click', (e) => {
-        if (e.target === elements.alertModalOverlay) hideAlertModal();
+        if (e.target === elements.alertModalOverlay) {
+            hideAlertModal();
+        }
     });
 
     // === HANDLER FUNCTIONS ===
@@ -692,9 +692,9 @@
                 const responseText = await fetchAiData(prompt);
                 if (!responseText) throw new Error("Respons AI kosong.");
 
-                // Robust JSON parsing
                 const startIndex = responseText.indexOf('[');
                 const endIndex = responseText.lastIndexOf(']');
+
                 if (startIndex === -1 || endIndex === -1) {
                     throw new Error("Respons AI tidak mengandung format JSON array yang valid.");
                 }
@@ -731,7 +731,7 @@
             </div>`;
 
         const formData = getFormData();
-        saveSession(formData);
+        saveSession(formData); // Save the session on successful generation
         
         try {
             // Sequential Generation
@@ -760,7 +760,6 @@
         }
     }
     
-    // Attach regenerate function to window to be accessible from dynamically created HTML
     window.handleRegenerate = async function(sectionKey) {
         const targetDiv = document.getElementById(`content-${sectionKey}`);
         const regenButton = document.querySelector(`button[onclick="window.handleRegenerate('${sectionKey}')"]`);
@@ -817,7 +816,7 @@
         activeGeminiTarget = icebreakerDiv; // Set target for replacement
         showGeminiModal('✨ Mencari Ide Ice Breaking Baru...', '<div class="section-loader"><div class="spinner"></div></div>');
         const formData = getFormData();
-        const prompt = `Anda adalah seorang guru yang kreatif. Sarankan sebuah aktivitas ice breaking atau brainstorming (durasi 5-10 menit) yang relevan untuk materi '${formData.materi}' pada mata pelajaran '${formData.mapel}' untuk siswa kelas ${formData.kelas}. Berikan instruksi yang jelas untuk guru dalam format HTML yang rapi. Ganti HANYA bagian Pendahuluan dari Kegiatan Pembelajaran.`;
+        const prompt = `Anda adalah seorang guru yang kreatif. Sarankan sebuah aktivitas ice breaking atau brainstorming (durasi 5-10 menit) yang relevan untuk materi '${formData.materi}' pada mata pelajaran '${formData.mapel}' untuk siswa kelas ${formData.kelas}. Berikan instruksi yang jelas untuk guru dalam format HTML yang rapi. Ganti hanya bagian Pendahuluan dari Kegiatan Pembelajaran.`;
         
         try {
             const newContent = await fetchAiData(prompt);
@@ -829,20 +828,14 @@
 
     function applyGeminiSuggestion() {
         if (activeGeminiTarget) {
-            // Special handling for replacing only the introduction part of the learning activities
             if (activeGeminiTarget.id === 'kegiatan-pembelajaran-content') {
                 const fullContent = activeGeminiTarget.innerHTML;
                 const closingTag = '<h4>Kegiatan Inti';
                 const closingIndex = fullContent.indexOf(closingTag);
-                
-                // This logic is a bit fragile. It's better to have separate divs for intro, main, and closing activities.
                 if (closingIndex !== -1) {
                     const newIntro = elements.geminiModalContent.innerHTML;
                     const restOfContent = fullContent.substring(closingIndex);
-                    activeGeminiTarget.innerHTML = `<h4>Pendahuluan</h4>${newIntro} <br>` + restOfContent;
-                } else {
-                    // Fallback if the structure isn't as expected
-                    activeGeminiTarget.innerHTML = elements.geminiModalContent.innerHTML;
+                    activeGeminiTarget.innerHTML = newIntro + restOfContent;
                 }
             } else {
                  activeGeminiTarget.innerHTML = elements.geminiModalContent.innerHTML;
@@ -850,6 +843,7 @@
             hideGeminiModal();
         }
     }
+
 
     // === HELPER FUNCTIONS ===
     function showGeminiModal(title, content) {
@@ -895,7 +889,6 @@
 
     function setGenerateButtonState(isGenerating, text) {
         elements.generateBtn.disabled = isGenerating;
-        // The text content is inside the last child of the button
         elements.generateBtn.lastChild.textContent = ` ${text}`;
     }
 
@@ -945,48 +938,50 @@
                 <div class="preview-card">
                     <div class="download-section" style="border-top: none; padding-top: 0;">
                         <button id="downloadWordBtn" class="btn btn-download">Download .docx</button>
-                        <button id="downloadPdfBtn" class="btn btn-download">Download .pdf</button>
                     </div>
                 </div>`;
         
-        document.getElementById('downloadWordBtn').addEventListener('click', () => downloadAsDocx(formData));
-        document.getElementById('downloadPdfBtn').addEventListener('click', () => downloadAsPdf(formData));
+        document.getElementById('downloadWordBtn').addEventListener('click', () => checkDownloadAccess('word', formData));
     }
 
     // === SESSION MANAGEMENT ===
     function saveSession(data) {
-        try {
-            localStorage.setItem('lastSession', JSON.stringify(data));
-        } catch (e) {
-            console.error("Failed to save session:", e);
-        }
+        localStorage.setItem('lastSession', JSON.stringify(data));
     }
 
     async function loadLastSession() {
         const savedData = localStorage.getItem('lastSession');
         if (savedData) {
-            try {
-                const data = JSON.parse(savedData);
-                
-                // Populate simple fields and selects
-                Object.keys(data).forEach(key => {
-                    if (elements[key] && data[key] !== undefined) {
-                        elements[key].value = data[key];
-                    }
-                });
+            const data = JSON.parse(savedData);
+            // Populate simple fields
+            Object.keys(elements).forEach(key => {
+                if (data[key] && elements[key] && elements[key].tagName !== 'SELECT') {
+                    elements[key].value = data[key];
+                }
+            });
+            
+            // Handle dependent dropdowns with delays
+            elements.jenisSekolah.value = data.jenisSekolah;
+            handleJenisSekolahChange();
+            await new Promise(r => setTimeout(r, 100)); // Wait for options to populate
+            
+            elements.kelas.value = data.kelas;
+            handleKelasChange();
+            await new Promise(r => setTimeout(r, 100));
 
-                // Sequentially trigger change handlers for dependent dropdowns
-                handleJenisSekolahChange();
-                handleKelasChange();
-                await handleMapelChange(); // This is async and needs to be awaited
-                
-                // Set the final dropdown value after options are populated
-                elements.materi.value = data.materi;
+            elements.mapel.value = data.mapel;
+            // We need to re-trigger the AI call for 'materi'
+            await handleMapelChange();
+            await new Promise(r => setTimeout(r, 100));
+            
+            elements.materi.value = data.materi;
 
-            } catch (error) {
-                console.error("Failed to load last session:", error);
-                showAlertModal("Gagal Memuat Sesi", "Tidak dapat memuat data sesi terakhir. Data mungkin korup.");
-            }
+            // Populate remaining selects
+            elements.tingkatKedalaman.value = data.tingkatKedalaman;
+            elements.tahun.value = data.tahun;
+            elements.semester.value = data.semester;
+            elements.pendekatan.value = data.pendekatan;
+            elements.model.value = data.model;
         } else {
             showAlertModal("Info", "Tidak ada sesi terakhir yang tersimpan.");
         }
@@ -994,9 +989,7 @@
     
     // === AI & PROMPT ENGINEERING ===
     async function fetchAiData(prompt) {
-        // IMPORTANT: The API key is handled by the execution environment.
-        // Do not hardcode it here for security reasons.
-        const apiKey = ""; 
+        const apiKey = "AIzaSyDJcff5F1-8Kueihd858uBzpHapJIiWEtQ";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
         
         const payload = {
@@ -1008,8 +1001,8 @@
             }
         };
 
-        let retries = 5;
-        let delay = 1500;
+        let retries = 7; // Increased retries
+        let delay = 1500; // Increased initial delay
 
         while (retries > 0) {
             try {
@@ -1029,24 +1022,22 @@
                 }
 
                 if (response.status === 429 || response.status === 503) {
-                    console.warn(`Model overloaded (status ${response.status}). Retrying in ${delay / 1000}s...`);
-                    // Exponential backoff
+                    console.log(`Model overloaded. Retrying in ${delay / 1000}s...`);
                     await new Promise(res => setTimeout(res, delay));
                     delay *= 2;
                     retries--;
                 } else {
                     const errorData = await response.json();
-                    throw new Error(`API Error (${response.status}): ${errorData.error.message}`);
+                    throw new Error(`API Error: ${errorData.error.message}`);
                 }
 
             } catch (error) {
                 if (retries > 1) {
-                    console.warn(`Network or fetch error. Retrying in ${delay / 1000}s...`, error);
+                    console.log(`Network error. Retrying in ${delay / 1000}s...`);
                     await new Promise(res => setTimeout(res, delay));
                     delay *= 2;
                     retries--;
                 } else {
-                    // Re-throw the last error if all retries fail
                     throw error;
                 }
             }
@@ -1086,8 +1077,8 @@
             <div class="preview-card">
                 <div class="pengesahan-section">
                      <table class="pengesahan-table"><tbody><tr>
-                         <td><p>Mengetahui,</p><p style="margin-bottom: 5rem;">Kepala Sekolah</p><p style="font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 2px;">...................................</p></td>
-                         <td><p>${data.lokasi}, ${formattedDate}</p><p style="margin-bottom: 5rem;">Guru Mata Pelajaran</p><p style="font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 2px;">${data.penyusun}</p></td>
+                        <td><p>Mengetahui,</p><p style="margin-bottom: 5rem;">Kepala Sekolah</p><p style="font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 2px;">...................................</p></td>
+                        <td><p>${data.lokasi}, ${formattedDate}</p><p style="margin-bottom: 5rem;">Guru Mata Pelajaran</p><p style="font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 2px;">${data.penyusun}</p></td>
                     </tr></tbody></table>
                 </div>
             </div>
@@ -1114,7 +1105,7 @@
                 instruction = `Buatkan HANYA konten untuk bagian INFORMASI UMUM. Ini mencakup: <h4>A. Identitas Modul</h4> (buat tabel berisi Penyusun: ${data.penyusun}, Satuan Pendidikan: ${data.instansi}, Tahun: ${data.tahun}, Kelas/Fase: ${data.kelas}/D, Mapel: ${data.mapel}, Alokasi Waktu: 2 JP (80 Menit)), <h4>B. Kompetensi Awal</h4>, <h4>C. Profil Pelajar Pancasila</h4>, <h4>D. Sarana dan Prasarana</h4>, <h4>E. Target Peserta Didik</h4>, dan <h4>F. Model Pembelajaran</h4>. ${detailLevelInstruction}`;
                 break;
             case 'komponen_inti':
-                instruction = `Buatkan HANYA konten untuk bagian KOMPONEN INTI. Ini mencakup: <h4>A. Capaian Pembelajaran</h4> (berdasarkan CP: "${data.cp || 'Buatkan oleh AI'}"), <h4>B. Tujuan Pembelajaran</h4> (berdasarkan TP: "${data.tp || 'Buatkan oleh AI'}"), <h4>C. Pemahaman Bermakna</h4>, <h4>D. Pertanyaan Pemantik</h4> (beri ID 'pertanyaan-pemantik-list' pada tag <ul> dan tambahkan tombol <button class="btn btn-gemini" onclick="window.handleExpandQuestions()">✨ Kembangkan dengan AI</button> setelahnya), <h4>E. Kegiatan Pembelajaran</h4> (beri ID 'kegiatan-pembelajaran-content' pada div pembungkusnya, struktur 3 tahap: Pendahuluan dengan ice breaking dan tombol <button class="btn btn-gemini" onclick="window.handleNewIcebreaker()">Cari Ide Ice Breaking Lain</button>, Inti dengan tips diferensiasi, Penutup dengan total 80 menit dan rincian waktu per tahap), <h4>F. Asesmen</h4>, <h4>G. Pengayaan & Remedial</h4>, serta <h4>H. Refleksi Guru & Siswa</h4>. ${detailLevelInstruction}`;
+                instruction = `Buatkan HANYA konten untuk bagian KOMPONEN INTI. Ini mencakup: <h4>A. Capaian Pembelajaran</h4> (berdasarkan CP: "${data.cp || 'Buatkan oleh AI'}"), <h4>B. Tujuan Pembelajaran</h4> (berdasarkan TP: "${data.tp || 'Buatkan oleh AI'}"), <h4>C. Pemahaman Bermakna</h4>, <h4>D. Pertanyaan Pemantik</h4> (beri ID 'pertanyaan-pemantik-list' pada tag <ul>), <h4>E. Kegiatan Pembelajaran</h4> (beri ID 'kegiatan-pembelajaran-content' pada div pembungkusnya, struktur 3 tahap: Pendahuluan dengan ice breaking, Inti dengan tips diferensiasi, Penutup dengan total 80 menit dan rincian waktu per tahap), <h4>F. Asesmen</h4>, <h4>G. Pengayaan & Remedial</h4>, serta <h4>H. Refleksi Guru & Siswa</h4>. ${detailLevelInstruction}`;
                 break;
             case 'lampiran':
                 instruction = `Buatkan HANYA konten untuk bagian LAMPIRAN. Ini mencakup: <h4>A. Lembar Kerja Peserta Didik (LKPD)</h4> (Selalu buat beberapa (2-3) alternatif LKPD yang berdiferensiasi, konkret, dan kreatif), <h4>B. Rubrik Penilaian</h4> (yang relevan dengan LKPD/Asesmen), <h4>C. Bahan Bacaan</h4>, <h4>D. Glosarium</h4>, dan <h4>E. Daftar Pustaka</h4>. ${detailLevelInstruction}`;
@@ -1129,46 +1120,66 @@
         `;
     }
 
-    // === DOWNLOAD FUNCTIONS ===
+    // === DOWNLOAD FUNCTIONS & SECURITY ===
+    function checkDownloadAccess(fileType, formData) {
+        const granted = localStorage.getItem('appAccessGranted') === 'true';
+        if (granted) {
+            if (fileType === 'word') {
+                downloadAsDocx(formData);
+            }
+        } else {
+            // Simpan data form sementara sebelum redirect
+            localStorage.setItem('pendingDownloadData', JSON.stringify(formData));
+            const printableContent = document.getElementById('printable-content');
+            if (printableContent) {
+                 localStorage.setItem('pendingDownloadHtml', printableContent.innerHTML);
+            }
+            window.location.href = `./security.html?target=${fileType}`;
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const startDownload = params.get('startDownload');
+        if (startDownload) {
+            const formDataString = localStorage.getItem('pendingDownloadData');
+            const htmlString = localStorage.getItem('pendingDownloadHtml');
+            if (formDataString && htmlString) {
+                const formData = JSON.parse(formDataString);
+                renderOutput(htmlString, formData); // Re-render the content
+                
+                if (startDownload === 'word') {
+                    downloadAsDocx(formData);
+                }
+                
+                localStorage.removeItem('pendingDownloadData');
+                localStorage.removeItem('pendingDownloadHtml'); 
+            }
+        }
+    });
+
     function downloadAsDocx(formData) {
-        const content = document.getElementById('printable-content').cloneNode(true);
-        content.querySelectorAll('.btn-regenerate, .btn-gemini').forEach(btn => btn.remove());
+        const content = document.getElementById('printable-content');
+        if (!content) {
+            showAlertModal("Oops!", "Belum ada konten yang bisa diunduh. Buat modul ajar dulu ya.");
+            return;
+        }
+        const contentClone = content.cloneNode(true);
+        contentClone.querySelectorAll('.btn-regenerate, .btn-gemini').forEach(btn => btn.remove());
         
         const header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Modul Ajar</title></head><body>`;
         const footer = "</body></html>";
-        const sourceHTML = header + content.innerHTML + footer;
+        const sourceHTML = header + contentClone.innerHTML + footer;
         
         const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
         const fileDownload = document.createElement("a");
         document.body.appendChild(fileDownload);
         fileDownload.href = source;
-        fileDownload.download = `ModulAjar_${formData.mapel.replace(/ /g, '_')}_${formData.materi.replace(/ /g, '_')}.doc`;
+        fileDownload.download = `ModulAjar_${formData.mapel.replace(/\s/g, '_')}.doc`;
         fileDownload.click();
         document.body.removeChild(fileDownload);
     }
 
-    function downloadAsPdf(formData) {
-        const { jsPDF } = window.jspdf;
-        const content = document.getElementById('printable-content').cloneNode(true);
-        // Remove buttons before printing to PDF
-        content.querySelectorAll('.btn-regenerate, .btn-gemini').forEach(btn => btn.remove());
-        
-        const doc = new jsPDF({
-            orientation: 'p',
-            unit: 'mm',
-            format: 'a4'
-        });
-
-        doc.html(content, {
-            callback: function(doc) {
-                doc.save(`ModulAjar_${formData.mapel.replace(/ /g, '_')}_${formData.materi.replace(/ /g, '_')}.pdf`);
-            },
-            x: 15,
-            y: 15,
-            width: 180,
-            windowWidth: 800
-        });
-    }
 </script>
 
 </body>
