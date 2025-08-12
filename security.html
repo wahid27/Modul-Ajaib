@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Akses</title>
+    <!-- ... Bagian head tetap seperti file asli ... -->
+</head>
+<body>
+    <!-- ... Bagian body dari file security.html asli tetap di sini ... -->
+    <script>
+        const securityForm = document.getElementById('securityForm');
+        const passwordInput = document.getElementById('passwordInput');
+        const errorMessage = document.getElementById('errorMessage');
+        const waButton = document.getElementById('waButton');
+
+        const NOMOR_WA_ADMIN = '6285159599193';
+        const PESAN_WA = 'Halo Admin, saya mau minta kode akses untuk Generator Modul Ajar Pro.';
+        const VALID_PASSWORDS = [
+            'RAHASIA123', 
+            'GURUMERDEKA', 
+            'KELAS9BISA'
+        ]; 
+
+        waButton.href = `https://wa.me/${NOMOR_WA_ADMIN}?text=${encodeURIComponent(PESAN_WA)}`;
+
+        securityForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const enteredPassword = passwordInput.value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const target = urlParams.get('target') || '';
+
+            if (VALID_PASSWORDS.includes(enteredPassword)) {
+                localStorage.setItem('downloadAccessGranted', 'true');
+                window.location.href = `index.html?startDownload=${target}`;
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>

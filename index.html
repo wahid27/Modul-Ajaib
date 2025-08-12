@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Modul Ajar Pro - SMP/MTs</title>
+    <!-- ... Bagian head tetap seperti file asli ... -->
+</head>
+<body>
+    <!-- ... Bagian body dari file index.html asli tetap di sini ... -->
+    <script>
+        // === Semua script asli index.html tetap di sini ===
+
+        // Tambahan script untuk proteksi download
+        function checkDownloadAccess(fileType) {
+            const granted = localStorage.getItem('downloadAccessGranted') === 'true';
+            if (granted) {
+                if (fileType === 'word') {
+                    downloadAsDocx(getFormData());
+                } else if (fileType === 'pdf') {
+                    downloadAsPdf();
+                }
+            } else {
+                window.location.href = `security.html?target=${fileType}`;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const startDownload = params.get('startDownload');
+            if (startDownload === 'word') {
+                downloadAsDocx(getFormData());
+            } else if (startDownload === 'pdf') {
+                downloadAsPdf();
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.id === 'downloadWordBtn') {
+                e.preventDefault();
+                checkDownloadAccess('word');
+            } else if (e.target && e.target.id === 'downloadPdfBtn') {
+                e.preventDefault();
+                checkDownloadAccess('pdf');
+            }
+        });
+    </script>
+</body>
+</html>
